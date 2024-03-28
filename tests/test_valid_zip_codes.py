@@ -58,6 +58,15 @@ def test_valid_zip_code_with_characters():
     response_data = response.json()
     assert response_data["country"] == "Czech Republic"
 
+    response = requests.get(API_PATH + "CZ/%2079862")
+    assert response.status_code == 404
+
+    response = requests.get(API_PATH + "CZ/%20798%2062")
+    assert response.status_code == 404
+
+    response = requests.get(API_PATH + "CZ/798%2062%20")
+    assert response.status_code == 404
+
 @pytest.mark.valid_zip
 def test_multiple_places_same_zip():
     response = requests.get(API_PATH + "CZ/100%2000")
