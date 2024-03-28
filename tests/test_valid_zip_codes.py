@@ -3,7 +3,7 @@ import requests
 from utils import API_PATH
 
 
-@pytest.mark.valid_code
+@pytest.mark.valid_zip
 def test_valid_zip_code_case_insensitivity():
 
     response_1 = requests.get(API_PATH + "us/90210")
@@ -33,7 +33,7 @@ def test_valid_zip_code_case_insensitivity():
     assert response_1.json() == response_2.json() == response_3.json() == expected_output
 
 
-@pytest.mark.valid_code
+@pytest.mark.valid_zip
 def test_valid_zip_code_with_characters():
     response = requests.get(API_PATH + "BR/01000-000")
     assert response.status_code == 200
