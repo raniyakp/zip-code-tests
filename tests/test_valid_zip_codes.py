@@ -53,6 +53,24 @@ def test_valid_zip_code_with_characters():
     response = requests.get(API_PATH + "LK/*")
     assert response.status_code == 404
 
+    response = requests.get(API_PATH + "CZ/798%2062")
+    assert response.status_code == 200
+    response_data = response.json()
+    assert response_data["country"] == "Czech Republic"
+
+@pytest.mark.valid_zip
+def test_multiple_places_same_zip():
+    response = requests.get(API_PATH + "CZ/100%2000")
+    assert response.status_code == 200
+    response_data = response.json()
+    assert response_data["country"] == "Czech Republic"
+    assert len(response_data["places"]) == 10
+
+    expected_places = ["Praha 10-Strašnice", "Praha 10-Vršovice", "Praha 10-Vinohrady", "Strašnice",
+        "Malešice", "Vršovice", "Vinohrady", "Žižkov", "Praha 10-Žižkov", "Praha 10-Malešice"
+    ]
+    assert sorted([place["place name"].split(" (")[0] for place in response_data["places"]]) == sorted(expected_places)
+
 @pytest.mark.valid_zip
 def test_api_params():
     response = requests.get(
