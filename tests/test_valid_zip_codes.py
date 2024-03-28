@@ -52,3 +52,15 @@ def test_valid_zip_code_with_characters():
     # Test without space before
     response = requests.get(API_PATH + "LK/*")
     assert response.status_code == 404
+
+@pytest.mark.valid_zip
+def test_api_params():
+    response = requests.get(
+        API_PATH + "BR/01000-000",
+        params={"param1": "testparam"}
+    )
+    assert response.status_code == 200
+    response_data = response.json()
+    assert response_data["post code"] == "01000-000"
+    assert response_data["country"] == "Brazil"
+    assert response_data["places"][0]["place name"] == "São Paulo"
