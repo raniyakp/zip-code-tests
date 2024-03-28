@@ -32,3 +32,6 @@ def test_empty_country_zipcode():
 
     response = requests.get(API_PATH + "*/")
     assert response.status_code == 404
+
+    response = requests.get(API_PATH + "/90211")
+    assert response.status_code == 404

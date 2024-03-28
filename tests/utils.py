@@ -1,2 +1,2 @@
 
-API_PATH = "http://api.zippopotam.us/"
+API_PATH = "https://api.zippopotam.us/"
