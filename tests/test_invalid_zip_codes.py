@@ -20,3 +20,15 @@ def test_invalid_zip_codes():
 
     response = requests.get(API_PATH + "us/%20")
     assert response.status_code == 404
+
+@pytest.mark.invalid_zip
+def test_empty_country_zipcode():
+
+    response = requests.get(API_PATH + "/%20")
+    assert response.status_code == 404
+
+    response = requests.get(API_PATH + "%20/")
+    assert response.status_code == 404
+
+    response = requests.get(API_PATH + "*/")
+    assert response.status_code == 404
